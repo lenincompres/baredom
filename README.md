@@ -90,9 +90,7 @@ document.body.set({
 
 ## Setting the DOM
 
-`DOM.set()` initializes and renders the document.
-
-It:
+`DOM.set()` initializes and renders the document. It:
 - renders elements
 - configures `<head>` and `<body>`
 - applies the BareDOM CSS reset
