@@ -120,16 +120,15 @@ document.body.set({
   footer: 'This is BareDOM.',
 });
 ```
-
-In this case, no CSS reset is applied.
-
 The new **h3** and **p** elements will be appended to the element.
 [See live code sample](https://editor.p5js.org/jht9629-nyu/sketches/Bv2yPxl9Y)
+
+In this case, no CSS reset is applied.
 
 ---
 
 <details>
-  <summary>Other ways to use DOM.set</summary>
+  <summary>Other ways to use `DOM.set`</summary>
   
   You may provide `DOM.set()` with an element where the model structure should be created.
 
