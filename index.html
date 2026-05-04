@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <title>BareDOM</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="DOM.js"></script>
 
   <!-- Markdown parser -->
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
@@ -18,15 +19,20 @@
   </style>
 </head>
 <body>
-
-<div id="app">Loading…</div>
-
 <script>
-fetch('./README.md')
-  .then(res => res.text())
-  .then(md => {
-    document.getElementById('app').innerHTML = marked.parse(md);
-  });
+
+Element.prototype.fetch = async function (url, func) {
+  const res = await fetch(url, options);
+  const text = await res.text();
+  if(func) text = await func(text);
+  this.innerHTML = text;
+  if(options.callback) options.callback();
+};
+
+DOM.set();
+
+document.body.fetch('./README.md', md => marked.parse(md));
+
 </script>
 
 </body>
