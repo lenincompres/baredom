@@ -84,7 +84,7 @@ document.body.set({
 });
 ```
 
-> Not simply vanilla. Bare.
+> Not vanilla. Bare.
 
 ---
 
