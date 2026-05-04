@@ -4,87 +4,48 @@
 <head>
   <meta charset="utf-8">
   <title>BareDOM</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" mainContent="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="/{DOM}_icon.png">
-
   <link rel="stylesheet" href="style.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-    rel="stylesheet">
-
   <script src="DOM.js"></script>
-  <!-- Markdown parser -->
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 
 <body>
   <script>
+    // Initialize reactive variables for main content and sample code
     Binder.set(window, {
-      content: '...loading',
+      mainContent: '...loading',
       sampleCode: false,
     });
 
-    fetch('./README.md').then(res => res.text()).then(md => {
-      content = marked.parse(md);
-      DOM.get('pre').forEach(pre => pre.textContent.startsWith('<') ? null : pre.set({
-        position: 'relative',
-        a: {
-          position: 'absolute',
-          bottom: '0.2rem',
-          right: '0.5rem',
-          text: '// ▶︎',
-          onclick: () => sampleCode = pre.textContent,
-        }
-      }));
-    });
-
+    // Set up the basic structure of the page
     DOM.set({
       header: {
-        textAlign: 'center',
         img: {
+          height: 128,
           src: '/{DOM}.png',
           alt: 'BareDOM Logo',
-          width: 128,
-          height: 128,
         },
       },
       main: {
-        content: _content,
+        content: _mainContent,
       },
       aside: {
         display: _sampleCode.as(v => v ? 'flex' : 'none'),
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        width: '100%',
-        height: '100vh',
-        padding: '4rem',
-        background: 'rgba(0,0,0,0.8)',
         onclick: () => sampleCode = false,
-        a: {
-          text: 'Close',
-          position: 'absolute',
-          top: '2rem',
-          right: '2rem',
-          color: 'var(--accent2)',
+        a_close: {
+          ariaLabel: 'Close Sample',
           onclick: () => sampleCode = false,
         },
         iframe: {
-          borderRadius: '0.5rem',
-          id: 'sampleIframe',
-          width: '100%',
-          margin: '0 auto',
-          maxWidth: '800px',
-          height: '100%',
-          background: 'var(--fg)',
-          srcdoc: _sampleCode.as(code => `<html><head><script src="https://cdn.jsdelivr.net/gh/lenincompres/baredom@latest/DOM.min.js"><\/script><\/head><body><script>${code}<\/script><\/body><\/html>`),
+          srcdoc: _sampleCode.as(code =>
+            `<html><head><script src="https://cdn.jsdelivr.net/gh/lenincompres/baredom@latest/DOM.min.js"><\/script><\/head><body><script>${code}<\/script><\/body><\/html>`
+          ),
           onclick: e => e.stopPropagation(),
         }
       },
       footer: {
-        textAlign: 'center',
         p: {
           span: [
             'Made by ', {
@@ -96,6 +57,23 @@
           ]
         },
       },
+    });
+
+    fetch('./README.md').then(res => res.text()).then(md => {
+      // Convert Markdown to HTML and set it as the main content
+      mainContent = marked.parse(md);
+
+      // Add "Run Sample" buttons to JavaScript code blocks
+      DOM.get('pre').forEach(pre => {
+        if (!pre.get('.language-js, .language-javascript')) return;
+        pre.set({
+          position: 'relative',
+          a_run: {
+            ariaLabel: 'Run Sample',
+            onclick: () => sampleCode = pre.textContent,
+          }
+        })
+      });
     });
   </script>
 </body>

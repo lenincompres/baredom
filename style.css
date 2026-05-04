@@ -28,6 +28,29 @@ body {
   line-height: 1.6;
 }
 
+body>aside{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  padding: 4rem;
+  background: rgba(0,0,0,0.8);
+}
+
+header, footer {
+  text-align: center;
+}
+
+iframe {
+  border-radius: 0.5rem;
+  width: 100%;
+  margin: 0 auto;
+  max-width: 800px;
+  height: 100%;
+  background: var(--fg);
+}
+
 /* Headings */
 h1,
 h2,
@@ -58,6 +81,27 @@ a {
 
 a:hover {
   text-decoration: underline;
+}
+
+a.run{
+  position: absolute;
+  bottom: 0.2rem;
+  right: 0.5rem;
+}
+
+a.run::after {
+  content: 'Run ▶︎';
+}
+
+a.close {
+  position: absolute;
+  top: 2rem;
+  right: 3rem;
+  color: var(--accent2);
+}
+
+a.close::after {
+  content: 'Close';
 }
 
 blockquote {
