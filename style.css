@@ -7,11 +7,11 @@
   /* yellow */
   --accent2: #3cc;
   /* cyan */
-  --accent3: #c3c;
+  --accent3: #eee;
   /* magenta */
 
   --code-bg: #111;
-  --border: #333;
+  --border: #c3c;
 }
 
 * {
@@ -26,11 +26,6 @@ body {
   color: var(--fg);
   font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
   line-height: 1.6;
-}
-
-main {
-  max-width: 800px;
-  margin: 0 auto;
 }
 
 /* Headings */

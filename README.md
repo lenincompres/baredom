@@ -1067,8 +1067,6 @@ MIT License
 
 by Lenin Comprés
 
-P5 editor examples by John Henry Thompson
-
 
 ## Have fun!
 
