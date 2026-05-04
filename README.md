@@ -128,7 +128,7 @@ In this case, no CSS reset is applied.
 ---
 
 <details>
-  <summary>Other ways to use `DOM.set` </summary>
+  <summary>Other ways to use DOM.set</summary>
   
   You may provide `DOM.set()` with an element where the model structure should be created.
 
