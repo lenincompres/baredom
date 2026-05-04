@@ -1,39 +1,53 @@
 <!doctype html>
 <html>
+
 <head>
   <meta charset="utf-8">
   <title>BareDOM</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script src="DOM.js"></script>
+  <link rel="icon" type="image/x-icon" href="/{DOM}_icon.png">
 
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+  <script src="DOM.js"></script>
   <!-- Markdown parser -->
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-
-  <style>
-    body {
-      font-family: system-ui;
-      max-width: 800px;
-      margin: 2rem auto;
-      line-height: 1.6;
-    }
-  </style>
 </head>
 <body>
-<script>
+  <script>
+    const _content = new Binder('...loading');
+    fetch('./README.md').then(res => res.text()).then(md => _content.value = marked.parse(md));
 
-Element.prototype.fetch = async function (url, func) {
-  const res = await fetch(url, options);
-  const text = await res.text();
-  if(func) text = await func(text);
-  this.innerHTML = text;
-  if(options.callback) options.callback();
-};
-
-DOM.set();
-
-document.body.fetch('./README.md', md => marked.parse(md));
-
-</script>
-
+    DOM.set({
+      header: {
+        textAlign: 'center',
+        img: {
+          src: '/{DOM}.png',
+          alt: 'BareDOM Logo',
+          width: 128,
+          height: 128,
+        },
+      },
+      main: {
+        content: _content,
+      },
+      footer: {
+        textAlign: 'center',
+        p: {
+          span: [
+            'Made by Lenin Comprés. View on ', {
+              tag: 'a',
+              href: 'www.lenino.net',
+              text: 'lenino.net',
+            }, '.'
+          ]
+        },
+      },
+    });
+  </script>
 </body>
+
 </html>
