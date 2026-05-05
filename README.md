@@ -2,7 +2,9 @@
 The DOM, unbound.
 
 ```js
-document.body.set({ h1: "Hello world" });
+document.body.set({
+  h1: "Hello world"
+});
 ```
 
 BareDOM is a minimalist JavaScript approach to building interfaces directly on the DOM—without frameworks, virtual DOMs, or template languages.
