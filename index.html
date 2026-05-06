@@ -40,7 +40,7 @@
         },
         iframe: {
           srcdoc: _sampleCode.as(code =>
-            `<html><head><script src="DOM.js"><\/script><\/head><body><script>let someElement=DOM.let({},true);${code}<\/script><\/body><\/html>`
+            `<html><head><script src="https://cdn.jsdelivr.net/gh/lenincompres/baredom@latest/DOM.min.js"><\/script><\/head><body><script>let someElement=DOM.let({},true);${code}<\/script><\/body><\/html>`
           ),
           onclick: e => e.stopPropagation(),
         }
