@@ -128,7 +128,7 @@ BareDOM can run directly in the browser with a single script include.
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <script src="https://cdn.jsdelivr.net/gh/lenincompres/baredom@latest/DOM.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/lenincompres/baredom@latest/DOM.js"></script>
   </head>
   <body>
     <script src="main.js"></script>
@@ -138,7 +138,7 @@ BareDOM can run directly in the browser with a single script include.
 Or download the DOM.js library and link that locally to your project.
 
 ```html
-<script src="DOM.min.js"></script>
+<script src="DOM.js"></script>
 ```
 
 For server-side usage, see [BareDOM-server](https://github.com/lenincompres/DOM.js-server)
