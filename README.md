@@ -65,6 +65,11 @@ The following is all the HTML we are going to need for the entirety of this docu
   </body>
 </html>
 ```
+Or download the DOM.js library and link that locally to your project.
+
+```html
+<script src="./DOM.min.js"></script>
+```
 
 For server-side usage, see [BareDOM-server](https://github.com/lenincompres/DOM.js-server)
 
