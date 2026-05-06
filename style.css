@@ -121,6 +121,14 @@ li {
   margin: 0.3rem 0;
 }
 
+li::before {
+  content: '•';
+  color: var(--accent1);
+  display: inline-block;
+  width: 1rem;
+  margin-left: -1rem;
+}
+
 /* Inline code */
 code {
   background: var(--code-bg);

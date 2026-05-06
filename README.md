@@ -2,7 +2,9 @@
 The DOM, unbound.
 
 ```js
-document.body.set({ h1: "Hello world" });
+document.body.set({
+  h1: "Hello world"
+});
 ```
 
 BareDOM is a minimalist JavaScript approach to building interfaces directly on the DOM—without frameworks, virtual DOMs, or template languages.
@@ -23,7 +25,7 @@ BareDOM is built on four ideas:
 - **element.set()** → declares structure, behavior, and bindings  
 - **DOM.set()** → initializes the document (head + body)
 
-BareDOM does not introduce components. Instead, elements grow into reusable, stateful patterns through extension and binding.
+BareDOM does not introduce a second rendering system. It extends the DOM directly.
 
 ### Other Element extensions
 
@@ -32,25 +34,88 @@ BareDOM does not introduce components. Instead, elements grow into reusable, sta
 - `element.css()` → scoped styling  
 - `element.bind()` → direct binding  
 
-BareDOM is not a framework. It is a thin layer over the DOM that makes it more expressive without adding abstraction.
+BareDOM is a thin layer over the browser platform—not a framework abstraction.
 
 ## Why BareDOM?
 
 BareDOM is for when you want:
 
 - Direct control over the DOM
-- No virtual DOM or diffing
-- No template languages (JSX, HTML-in-JS)
 - Minimal abstraction
-- A small, readable mental model
+- No virtual DOM
+- No template language
+- No compilation step
 
-Instead of learning a framework, you extend what already exists.
+The browser already provides:
 
-BareDOM does not replace the DOM. It makes it more expressive.
+- rendering
+- events
+- styling
+- networking
+- storage
+- animation
+- accessibility
+
+BareDOM builds directly on these native capabilities.
+
+### The Browser Is Already a Runtime
+
+Modern frontend ecosystems often require:
+
+- build pipelines
+- transpilers
+- bundlers
+- framework runtimes
+- server-side rendering
+- hydration systems
+- package managers
+
+Even simple interfaces may depend on an entire compilation ecosystem.
+
+BareDOM takes a different approach.
+
+The browser already provides:
+
+- a rendering engine
+- a UI tree
+- an event system
+- styling
+- networking
+- modules
+- storage
+- media
+- animation
+- accessibility
+
+BareDOM builds directly on these native capabilities.
+
+```js
+myElement.set({
+  ul: data.map(d => ({
+    li: d.name
+  }))
+})
+```
+
+This can run:
+
+- directly in the browser
+- from a CDN
+- inside a static HTML file
+- without compilation
+- without JSX
+- without bundling
+- without virtual DOM
+- without server-side rendering
+
+The DOM is the render tree.
+JavaScript is the template language.
+JSON is the content layer.
+The browser is the platform.
 
 ## Setup
 
-The following is all the HTML we are going to need for the entirety of this documentation. It is our `index.html` file. The rest of our code will be in JavaScript (`main.js`). We will not need CSS either.
+BareDOM can run directly in the browser with a single script include.
 
 ```html
 <!DOCTYPE html>
