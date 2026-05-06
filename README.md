@@ -3,7 +3,7 @@ The DOM, unbound.
 
 ```js
 document.body.set({
-  h1: "Hello world"
+  h1: 'Hello world'
 });
 ```
 
@@ -72,9 +72,7 @@ Modern frontend ecosystems often require:
 
 Even simple interfaces may depend on an entire compilation ecosystem.
 
-BareDOM takes a different approach.
-
-The browser already provides:
+BareDOM recognizes that the browser already provides:
 
 - a rendering engine
 - a UI tree
@@ -90,11 +88,18 @@ The browser already provides:
 BareDOM builds directly on these native capabilities.
 
 ```js
-myElement.set({
-  ul: data.map(d => ({
-    li: d.name
-  }))
-})
+const data = [{name: 'Monica'}, {name: 'Ross'}, {name: 'Rachel'}, {name: 'Chandler'}, {name: 'Phoebe'}, {name: 'Joey'}];
+
+const friendsList = DOM.let('section', {
+  h2: 'Friends',
+  ul: {
+    li: data.map(d => d.name)
+  }
+});
+
+document.body.set({
+  section: friendsList,
+});
 ```
 
 This can run:
@@ -108,10 +113,12 @@ This can run:
 - without virtual DOM
 - without server-side rendering
 
-The DOM is the render tree.
-JavaScript is the template language.
-JSON is the content layer.
-The browser is the platform.
+> The DOM is the render tree.</br>
+> JavaScript is the template language.</br>
+> JSON is the content layer.</br>
+> The browser is the platform.
+
+This makes BareDOM naturally compatible with structured content systems, semantic metadata, and machine-readable web architectures.
 
 ## Setup
 
@@ -136,7 +143,7 @@ Or download the DOM.js library and link that locally to your project.
 
 For server-side usage, see [BareDOM-server](https://github.com/lenincompres/DOM.js-server)
 
-## Example
+### Example
 
 A reactive value:
 
@@ -148,7 +155,7 @@ document.body.set({
     text: _count.as(c => `Count: ${c}`),
   },
   button: {
-    text: "Increment",
+    text: 'Increment',
     onclick: () => _count.value++
   }
 });
@@ -167,10 +174,10 @@ document.body.set({
 
 ```js
 DOM.set({
-  title: "My App",
+  title: 'My App',
   main: {
-    h1: "Hello World",
-    p: "Lorem ipsum…"
+    h1: 'Hello World',
+    p: 'Lorem ipsum…'
   }
 });
 ```
@@ -180,18 +187,20 @@ DOM.set({
 You may also invoke the `set` method directly on an element to model it:
 
 ```javascript
-someElement.set({
-  h3: 'Hello world',
+const mainContent = DOM.let('main', {
+  h2: 'Hello world',
   p: 'Lorem  ipsum…',
 });
 
 document.body.set({
-  main: someElement,
+  header: {
+    h1: 'Sample Code',
+  },
+  main: mainContent,
   footer: 'This is BareDOM.',
 });
 ```
 The new **h3** and **p** elements will be appended to the element.
-[See live code sample](https://editor.p5js.org/jht9629-nyu/sketches/Bv2yPxl9Y)
 
 In this case, no CSS reset is applied.
 
@@ -309,8 +318,6 @@ document.body.set({
 goBtn.style.border = 'solid 2px lime';
 ```
 
-[See live code sample](https://editor.p5js.org/jht9629-nyu/sketches/IJDh1-znl)
-
 NOTE:
 
 - Providing an element with an `id` will create a global variable (with that name) to hold that element.
@@ -320,9 +327,9 @@ NOTE:
 The **set** method allows you to modify attributes, styles, event handlers, and content of existing elements with just one call.
 
 ```javascript
-myElement.set({
+someElement.set({
   padding: '0.5em 2em',
-  backgroundColor: 'lavender',
+  backgroundColor: 'tan',
   text: 'Some text',
 });
 ```
@@ -332,7 +339,7 @@ myElement.set({
 You can set up the class attribute of the element passing a string to replace its content.
 
 ```javascript
-myElement.set({
+someElement.set({
   class: 'my-classname other-classname',
 });
 ```
@@ -340,7 +347,7 @@ myElement.set({
 Or, use an array, to add classes to the classList without replacing existing ones.
 
 ```javascript
-myElement.set({
+someElement.set({
   class: ['my-classname', 'other-classname'],
 });
 ```
@@ -348,9 +355,9 @@ myElement.set({
 You may also use an object to add or remove a class.
 
 ```javascript
-myElement.set({
+someElement.set({
   class: {
-    classname: false, // this removes the class "classname"
+    classname: false, // this removes the class 'classname'
     'other-classname': true, // this adds the class
     'yet-another': isAnother, // this adds or removes depending of the truthy o falsy value of isAnother
   },
@@ -378,8 +385,6 @@ document.body.set({
   },
 });
 ``` 
-
-[See live code sample](https://editor.p5js.org/jht9629-nyu/sketches/Hl1Tu1U1U)
 
 ### Setting the Head
 
@@ -417,6 +422,10 @@ document.head.set({
     src: 'fonts/myFont.ttf',
   },
 });
+
+document.body.set({
+  h1: 'Hello world'
+});
 ```
 
 The **set** method also understands default values for properties like `link`, `style`, `font`, or `script` elements; and accepts arrays of elements for them.
@@ -424,7 +433,7 @@ The **set** method also understands default values for properties like `link`, `
 ```javascript
 document.head.set({
   link: 'style.css',
-  style: 'body{ margin:0; backgroundColor: gray; }',
+  style: 'h1{ color:rosybrown; background-color: brown; }',
   script: ['main.js', 'lib/dependecies.js'],
   font: [
     'fonts/myFont.ttf',
@@ -433,6 +442,10 @@ document.head.set({
       src: 'fonts/anotherName.ott',
     },
   ],
+});
+
+document.body.set({
+  h1: 'Hello world'
 });
 ```
 
@@ -455,12 +468,26 @@ const myFooter = DOM.let('footer', {
   p: 'Made with BareDOM',
 });
 
+const CSS = {
+  body: {
+    padding: '2em',
+    h: {
+      color: 'navy',
+      margin: '0.5em 0',
+    },
+    p: {
+      margin: '1em 0',
+    }
+  },
+};
+
 DOM.set({
   title: 'Title of the webpage',
   charset: 'UTF-8',
   icon: 'icon.ico',
   keywords: 'website,multiple,keywords',
   description: 'Website created with BareDOM',
+  css: CSS,
   header: myHeader,
   main: myMain,
   footer: myFooter,
@@ -472,7 +499,7 @@ DOM.set({
 Use arrays to create multiple consecutive elements of the same kind.
 
 ```javascript
-myElement.set({
+someElement.set({
   ul: {
     li: ['First item', 'Second item', 'A third one, for good measure'],
   },
@@ -482,7 +509,7 @@ myElement.set({
 Declaring the array inside a `content` property allows you to set other properties for all the elements in the array.
 
 ```javascript
-myElement.set({
+someElement.set({
   ul: {
     li: {
       id: 'listedThings',
@@ -514,7 +541,7 @@ document.body.set({
       },
       {
         tag: 'img',
-        src: 'thesource.jpg',
+        src: '{DOM}_icon.png',
         alt: 'This one is an image',
       },
       {
@@ -538,7 +565,7 @@ document.body.set([
   },
   {
     tag: 'img',
-    src: 'thesource.jpg',
+    src: '{DOM}_icon.png',
     alt: 'This one is an image',
   },
   {
@@ -556,21 +583,23 @@ class CustomElement extends HTMLElement {
   constructor() {
     super();
     this.set({
-      h2: "A title",
-      p: "A paragraph.",
+      h2: 'A title',
+      p: 'A paragraph.',
       button: {
-        text: "Click Me!",
+        text: 'Click Me!',
         onclick: () => this.clickAction(),
       }
     });
   }
 
   clickAction() {
-    alert("Button clicked!");
+    alert('Button clicked!');
   }
 }
 
 customElements.define('custom-element', CustomElement);
+
+document.body.set(new CustomElement());
 ```
 
 This allows you to use **<custom-button></custom-button>** in your HTML. BareDOM enables simple, modular structures by extending native elements.
@@ -587,7 +616,7 @@ Assign a string to the `style` property to update the inline style of the elemen
 
 ```javascript
 const myMain = DOM.let('main', {
-  style: 'margin: 20px; font-family: Tahoma; background-color: gray;',
+  style: 'margin: 20px; font-family: Tahoma; background-color: skyblue;',
   content: 'The style is in the style attribute of the main element.',
 });
 
@@ -609,7 +638,7 @@ const myMain = DOM.let('main', {
   style: {
     margin: '20px',
     fontFamily: 'Tahoma',
-    backgroundColor: 'gray',
+    backgroundColor: 'skyblue',
   },
   content: {
     h1: 'Styled Main Element',
@@ -634,7 +663,7 @@ Styles may be assigned without an encompassing `style` property. The previous co
 const myMain = DOM.let('main', {
   margin: '20px',
   fontFamily: 'Tahoma',
-  backgroundColor: 'gray',
+  backgroundColor: 'skyblue',
   h1: 'Styled Main Element',
   p: 'This manages the style values individually.',
 });
@@ -800,19 +829,21 @@ DOM.set({
 
 The convention of declaring binders as a constant and naming them in all-caps, or preceded by an underscore character, can be helpful.
 
-[See live code sample](https://editor.p5js.org/jht9629-nyu/sketches/DNCSUTBnq)
-
 It is recommended to bind properties rather than element declarations. Structure should remain stable, while values change through bindings.
 
 If the entire content of an element depends on a binding, use the `content` property instead of binding the element itself.
 
 ```javascript
-myElement.set({
+const _myBinder = new Binder(false);
+
+someElement.set({
   h3: {
     content: _myBinder.as(v => ({
-      text: v ? 'Cool beans.' : 'No way, Jose.',
+      text: v ? 'Cool beans.' : 'No way, José.',
       color: v ? 'green' : 'gray',
     })),
+    onmouseover: e => _myBinder.value = true,
+    onmouseout: e => _myBinder.value = false,
   }
 });
 ```
@@ -829,6 +860,7 @@ const _fieldEnabled = new Binder(false);
 const myMain = DOM.let('main', {
   div: {
     style: {
+      padding: '1em',
       background: _fieldEnabled.as({
         false: 'gray',
         true: 'green',
@@ -869,7 +901,7 @@ Classes in the classList can be bound to a binder as well. They changing value o
 
 You may call the `bind` method of a binder and provide the element and property to be bound to it.
 
-```javascript
+```
 _myBinder.bind(someElement, 'text', (value) => `The field is: ${value}.`);
 ```
 
@@ -878,7 +910,7 @@ An `element` is the target, a `string` the property to bind, and a `function` wi
 
 The `DOM.binder()` method may also be called with initial binding settings. The first argument will be the value of the binder.
 
-```javascript
+```
 let _myBinder = DOM.binder(true, someElement, 'text', (value) => `The field is: ${value}.`);
 ```
 
@@ -886,7 +918,7 @@ let _myBinder = DOM.binder(true, someElement, 'text', (value) => `The field is: 
 
 You may update the value of other binders by binding them.
 
-```javascript
+```
 _myBinder.bind(_anotherBinder, (value) => (value ? 'red' : 'blue'));
 ```
 
@@ -894,7 +926,7 @@ _myBinder.bind(_anotherBinder, (value) => (value ? 'red' : 'blue'));
 
 You may add listener methods to be called when a binder is updated.
 
-```javascript
+```
 _myBinder.onChange((value) => alert('The value was updated to: ' + value));
 ```
 
@@ -902,7 +934,7 @@ _myBinder.onChange((value) => alert('The value was updated to: ' + value));
 
 If instead of a function or an object model, the binding is given an array, it assumes these outcomes to be indexed by the value of the binder.
 
-```javascript
+```
 DOM.set({
   background: _fieldEnabled.as('gray', 'green'),
 });
@@ -970,11 +1002,9 @@ let myElement = new MyElement(true);
 
 DOM.set({
   h1: 'Extended HTML element',
-  MyElement: myElement,
+  myElement: myElement,
 });
 ```
-
-[See live code sample](https://editor.p5js.org/jht9629-nyu/sketches/X1REi2O0H)
 
 #### Binder.set(): create binders and their setters and getters with one method
 
@@ -992,13 +1022,14 @@ class MyElement extends HTMLElement {
 
     Binder.set(this, {
       active: false,
-      otherProp: "initial other value",
+      otherProp: 'initial other value',
     });
 
     this.set({
-      padding: "1em",
-      backgroundColor: this._active.as('red', 'green'),
-      p: "This button toggles the active state of the element",
+      display: 'block',
+      padding: '1em',
+      backgroundColor: this._active.as('red', 'lime'),
+      p: 'This button toggles the active state of the element',
       button: {
         text: this._active.as('activate', 'deactivate'),
         onclick: (e) => this.active = !this.active,
@@ -1007,12 +1038,14 @@ class MyElement extends HTMLElement {
   }
 }
 customElements.define('my-element', MyElement);
+
+document.body.set(new MyElement());
 ```
 
 NOTE:
 `Binder.set` can also create binders with their setters and getters globally or in any object:
 
-```js
+```
 Binder.set(window, {
   myProp: 0
 });
@@ -1034,47 +1067,47 @@ state.myProp = false;
 
 This method returns an element's property value based on a `string` provided. It matches it to an attribute, style property, element tag (in the scope), or query selector. If no `string` is provided, it returns the value property or the innerHTML.
 
-```javascript
+```
 DOM.get('backgroundColor'); // returns the body's background color
 
 document.body.get('backgroundColor'); // same as before
 
-myElement.get('class'); // returns the class attribute of the element
+someElement.get('class'); // returns the class attribute of the element
 
-myElement.get('classes'); // returns the classes in the attribute of the element as an array
+someElement.get('classes'); // returns the classes in the attribute of the element as an array
 
-myElement.get(); // returns the value (in the case of inputs) or the innerHTML
+someElement.get(); // returns the value (in the case of inputs) or the innerHTML
 
-myElement.get('text'); // returns the innerText
+someElement.get('text'); // returns the innerText
 
-myElement.get('article'); // returns the array of article tag elements within myElement's scope
+someElement.get('article'); // returns the array of article tag elements within someElement's scope
 
-myElement.get('.nice'); // similar to querySelectorAll, but returns an array of elements
+someElement.get('.nice'); // similar to querySelectorAll, but returns an array of elements
 ```
 
 ### DOM.let() and element.let()
 
 This method allows you to set the value of an element's property. And it allows you to set this value based on the current value of the property.
 
-```javascript
+```
 document.body.let('backgroundColor', 'red');
 
-myElement.let('text', 'New text');
+someElement.let('text', 'New text');
 
-myElement.let('color', cVal => cVal === 'red' ? 'blue' : 'green');  // It will apply this rule based on the current color,
+someElement.let('color', cVal => cVal === 'red' ? 'blue' : 'green');  // It will apply this rule based on the current color,
 ```
 
 When using the *DOM.let* and a tag name to create new elements, you add a boolean value as a third parameter. You may preppend (*true*) or not-append (*false*) the new element.
 
 ```
-let myElement = DOM.let('section', {
+let someElement = DOM.let('section', {
     background: 'silver',
     h1: 'Heading of a new section',
   },
   false,
 );
 
-myElement.let('p', {
+someElement.let('p', {
     margin: '2em',
     text: 'This is a new paragraph.',
   },
@@ -1124,8 +1157,6 @@ someP5Element.set({
 
 goBtn.addClass('nice-button');
 ```
-
-[See live code sample](https://editor.p5js.org/jht9629-nyu/sketches/mLU67cNL0)
 
 ---
 

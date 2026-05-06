@@ -2,7 +2,7 @@
  * BareDOM {DOM}
  * The DOM, unbound.
  * @author Lenin Compres <lenincompres@gmail.com>
- * @version 1.3.2
+ * @version 1.3.3
  *
  * Changes:
  * - Replaced Object.prototype.binderSet with Binder.set
@@ -65,6 +65,10 @@ Element.prototype.set = function (model, ...args) {
   let argsType = DOM.typify(...args);
   const IS_PRIMITIVE = modelType.isPrimitive;
   let station = argsType.string; // original style|attr|tag|inner…|on…|name
+  if(Array.isArray(model)) {
+    model.forEach(item => this.set(item, station ? station : 'section', ...args));
+    return this;
+  }
   const CLEAR = !station && IS_PRIMITIVE || station === "content";
   if ([undefined, "inner", "create", "assign", "model", "set"].includes(station)) station = "content";
   const STATION = station;
@@ -729,8 +733,10 @@ class DOM {
    * @param {station} station - propety to get.
    * @param {be} func - logic to be applied based on the current value of the station.
    */
-  static let (station, ...args) {
-    return DOM.headTags.includes(station.toLowerCase()) ? document.head.let(station, ...args, false) : document.body.let(station, ...args, false);
+  static let (...args) {
+    if(typeof args[0] !== "string" ) return DOM.let('section', ...args);
+    const station = args[0];
+    return DOM.headTags.includes(station.toLowerCase()) ? document.head.let(...args, false) : document.body.let(...args, false);
   }
   /**
    * Sets the value of a property and creates elements in the document head and body based on an object model. Also resets the css.
