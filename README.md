@@ -953,8 +953,6 @@ const _user = Binder.fetch('/api/user', {
 
 #### Updating existing binders
 
-Existing binders may also fetch and update their value directly using `_binder.fetch()`.
-
 ```js
 const _content = new Binder('...loading');
 
@@ -964,6 +962,8 @@ document.body.set({
   content: _content
 });
 ```
+
+Existing binders may also fetch and update their value directly using `_binder.fetch()`.
 
 <details>
  <summary>Binding outside the set method</summary>
