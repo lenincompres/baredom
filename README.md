@@ -30,9 +30,9 @@ BareDOM does not introduce a second rendering system. It extends the DOM directl
 ### Other Element extensions
 
 - `element.get()` → read from the DOM  
-- `element.let()` → create and return elements  
-- `element.css()` → scoped styling  
-- `element.bind()` → direct binding  
+- `DOM.let()` → create and return elements  
+- `Binder.set()` → create reactive values, setters, and getters
+- and additional utility methods
 
 BareDOM is a thin layer over the browser platform—not a framework abstraction.
 
@@ -163,8 +163,6 @@ document.body.set({
 
 > Not vanilla. Bare.
 
----
-
 ## Setting the DOM
 
 `DOM.set()` initializes and renders the document. It:
@@ -186,7 +184,7 @@ DOM.set({
 
 You may also invoke the `set` method directly on an element to model it:
 
-```javascript
+```js
 const mainContent = DOM.let('main', {
   h2: 'Hello world',
   p: 'Lorem  ipsum…',
@@ -204,14 +202,12 @@ The new **h3** and **p** elements will be appended to the element.
 
 In this case, no CSS reset is applied.
 
----
-
 <details>
-  <summary>Other ways to use DOM.set</summary>
+  <summary>More ways to use DOM.set</summary>
   
   You may provide `DOM.set()` with an element where the model structure should be created.
 
-```javascript
+```js
 DOM.set(
   {
     h1: 'Hello world',
@@ -224,7 +220,7 @@ DOM.set(
 You may also provide a `string` to indicate the tag for a new element where the DOM structure will be created.
 The following example creates a `main` element inside the `someElement`. It returns this `main` element.
 
-```javascript
+```js
 DOM.set({
   h1: 'Hello world',
   p: 'This is <b>a</b> paragraph.';
@@ -238,7 +234,7 @@ DOM.set({
 
 The following code creates and returns a main element, and adds it to the document body.
 
-```javascript
+```js
 let mainElement = DOM.set(
   {
     h1: 'Hello world',
@@ -250,7 +246,7 @@ let mainElement = DOM.set(
 
 The following code creates an image element without adding it to the document body.
 
-```javascript
+```js
 let mainImage = DOM.set(
   {
     alt: 'Hello world',
@@ -265,7 +261,7 @@ For `DOM.set()`, a boolean argument with a *false* value indicates that this ele
 
 Models may contain properties for tags and ids, and a children or element array of similar or different elements.
 
-```javascript
+```js
 const model = {
   tag: 'div',
   id: 'container',
@@ -286,13 +282,11 @@ document.body.set(model);
 
 </details>
 
----
-
 ### Properties: Attributes, Events and listeners
 
 The **set** method recognizes **properties** in the model structure, such as attributes or event handlers. You may use a unique name that will become the element's id, and indicate the tag as a key property. Or, use a selector style name, which may even include classes separated by periods.
 
-```javascript
+```js
 document.body.set({
   input: {
     id: 'myInput',
@@ -326,7 +320,7 @@ NOTE:
 
 The **set** method allows you to modify attributes, styles, event handlers, and content of existing elements with just one call.
 
-```javascript
+```js
 someElement.set({
   padding: '0.5em 2em',
   backgroundColor: 'tan',
@@ -338,7 +332,7 @@ someElement.set({
 
 You can set up the class attribute of the element passing a string to replace its content.
 
-```javascript
+```js
 someElement.set({
   class: 'my-classname other-classname',
 });
@@ -346,7 +340,7 @@ someElement.set({
 
 Or, use an array, to add classes to the classList without replacing existing ones.
 
-```javascript
+```js
 someElement.set({
   class: ['my-classname', 'other-classname'],
 });
@@ -354,7 +348,7 @@ someElement.set({
 
 You may also use an object to add or remove a class.
 
-```javascript
+```js
 someElement.set({
   class: {
     classname: false, // this removes the class 'classname'
@@ -368,7 +362,7 @@ someElement.set({
 
 `DOM.let()` creates elements without attaching them to the DOM.
 
-```javascript
+```js
 const myParagraph = DOM.let('p', {
   padding: '0.5em 2em',
   backgroundColor: 'lavender',
@@ -390,7 +384,7 @@ document.body.set({
 
 Just as with any element, you may invoke the **set** method on the head element. Many of its properties can be set directly. It will even link fonts and make them available as font-family styles.
 
-```javascript
+```js
 document.head.set({
   title: 'Title of the webpage',
   charset: 'UTF-8',
@@ -430,7 +424,7 @@ document.body.set({
 
 The **set** method also understands default values for properties like `link`, `style`, `font`, or `script` elements; and accepts arrays of elements for them.
 
-```javascript
+```js
 document.head.set({
   link: 'style.css',
   style: 'h1{ color:rosybrown; background-color: brown; }',
@@ -452,7 +446,7 @@ document.body.set({
 Note how **set** recognizes common head information (icon, charset, keywords, description, etc).
 In fact, the `DOM.set()` method recognizes these as well, and adds them on the `document.head` instead of the `body`.
 
-```javascript
+```js
 const myHeader = DOM.let('header', {
   h1: 'Page built with DOM.set',
 });
@@ -498,7 +492,7 @@ DOM.set({
 
 Use arrays to create multiple consecutive elements of the same kind.
 
-```javascript
+```js
 someElement.set({
   ul: {
     li: ['First item', 'Second item', 'A third one, for good measure'],
@@ -508,7 +502,7 @@ someElement.set({
 
 Declaring the array inside a `content` property allows you to set other properties for all the elements in the array.
 
-```javascript
+```js
 someElement.set({
   ul: {
     li: {
@@ -531,13 +525,13 @@ If you give several elements the same `id`, `set()` will group them in one globa
 
 Arrays can create consecutive elements of different types; just indicate their `tag` as a property.
 
-```javascript
+```js
 document.body.set({
   main: {
     elements: [
       {
         tag: 'p',
-        text: 'this one is a paragraph.',
+        text: 'This is a paragraph.',
       },
       {
         tag: 'img',
@@ -546,7 +540,7 @@ document.body.set({
       },
       {
         tag: 'p',
-        text: 'another paragraph',
+        text: 'This is another paragraph',
       },
     ],
   },
@@ -557,11 +551,11 @@ You can name these elements anything—in this case, they were named `elements`�
 
 Similarly, if you give DOM.set an array, it assumes it is an array of elements, and will create them as *div*s, or any tag property they possess.
 
-```javascript
+```js
 document.body.set([
   {
     tag: 'p',
-    text: 'this one is a paragraph.',
+    text: 'This is a paragraph.',
   },
   {
     tag: 'img',
@@ -570,7 +564,7 @@ document.body.set([
   },
   {
     tag: 'p',
-    text: 'another paragraph',
+    text: 'This is another paragraph',
   },
 ]);
 ```
@@ -578,7 +572,7 @@ document.body.set([
 
 BareDOM allows you to build modular, reusable components by expanding the HTMLElement class. Here's an example:
 
-```javascript
+```js
 class CustomElement extends HTMLElement {
   constructor() {
     super();
@@ -606,15 +600,13 @@ This allows you to use **<custom-button></custom-button>** in your HTML. BareDOM
 
 Enhance your custom Elements with BareDOM by [binding their properties](#extending-the-htmlelement-class).
 
----
-
 ## Styling Elements
 
 ### Style Attribute
 
 Assign a string to the `style` property to update the inline style of the element—replacing any previous value.
 
-```javascript
+```js
 const myMain = DOM.let('main', {
   style: 'margin: 20px; font-family: Tahoma; background-color: skyblue;',
   content: 'The style is in the style attribute of the main element.',
@@ -633,7 +625,7 @@ DOM.set({
 
 Asign a structural object to the `style` to update individual style properties—use names in camelCase.
 
-```javascript
+```js
 const myMain = DOM.let('main', {
   style: {
     margin: '20px',
@@ -659,7 +651,7 @@ This is equivalent to using the [style property of DOM elements](https://www.w3s
 
 Styles may be assigned without an encompassing `style` property. The previous code could be written as follows.
 
-```javascript
+```js
 const myMain = DOM.let('main', {
   margin: '20px',
   fontFamily: 'Tahoma',
@@ -684,11 +676,11 @@ Yet, **DOM.set** interprets structural properties to match attributes, styles, e
 
 If `style` has a `content` property, an element with a style tag and CSS content is created. Click here to [learn about CSS](https://www.w3schools.com/css/css_intro.asp).
 
-```javascript
+```js
 const myMain = DOM.let('main', {
   style: {
     lang: 'scss',
-    content: 'main { margin: 20px; font-family: Tahoma; color: gray; }',
+    text: 'main { margin: 20px; font-family: Tahoma; color: gray; }',
   },
   content: 'This style is applied to all MAIN elements in the page.',
 });
@@ -704,11 +696,15 @@ document.body.set({
 
 This method is discouraged, since it will affect all elements in the DOM not just the one invoking **set**.
 
+
+<details>
+  <summary>CSS Property and Method</summary>
+
 ### CSS Property
 
 Use `css:` in your model structure to create styling rules that apply **only** to the current element and its children.
 
-```javascript
+```js
 const myMain = DOM.let('main', {
   css: {
     margin: '20px',
@@ -755,7 +751,7 @@ Nested selectors affect all children in the hierarchy of the DOM.
 - `_class, tag_class`: Leading underscores and any other in the selector are turned into (.) to indicate classes.
 - `\_\_class`: Two leading underscores mean the class is applied to the parent selector.
 
-```javascript
+```js
 mainArea.css({
   a: {
     // #mainArea a
@@ -793,7 +789,7 @@ mainArea.css({
 });
 ```
 
----
+</details>
 
 ## Binding Element Properties
 
@@ -802,7 +798,7 @@ mainArea.css({
 Any element's property (attribute, content, style, content or event handler) can be **bound** to a `Binder` object.
 When the `value` property of this object changes, it automatically updates all element properties' bound to it.
 
-```javascript
+```js
 const _myBinder = new Binder('Default value');
 
 const myMain = DOM.let('main', {
@@ -833,7 +829,7 @@ It is recommended to bind properties rather than element declarations. Structure
 
 If the entire content of an element depends on a binding, use the `content` property instead of binding the element itself.
 
-```javascript
+```js
 const _myBinder = new Binder(false);
 
 someElement.set({
@@ -854,7 +850,7 @@ Bindings can return full property objects, not just primitive values. This allow
 
 Using the `.as()` method of the binders, you may provide a function that returns the correct value to assign to the element's property based on the value of the binder, or provide an object model to map the values to.
 
-```javascript
+```js
 const _fieldEnabled = new Binder(false);
 
 const myMain = DOM.let('main', {
@@ -893,11 +889,84 @@ DOM.set({
 });
 ```
 
-[p5jsj](https://editor.p5js.org/jht9629-nyu/sketches/66VL3dHNk)
+### Binder.fetch()
 
-Classes in the classList can be bound to a binder as well. They changing value of `true` or `false` will determine if a class is added or removed.
+`Binder.fetch()` creates a Binder whose value is updated from a fetched resource.
 
-### Binding outside the set method
+It is useful for asynchronously loading text, markdown, JSON, or other remote content directly into a binding flow.
+
+`Binder.fetch()` does not replace `fetch()`.
+
+It provides a reactive Binder wrapper around asynchronous values.
+
+#### Loading text content
+
+```js
+document.body.set({
+  main: {
+    content: Binder.fetch('./README.md', {
+      initial: '...loading',
+    }),
+  }
+});
+```
+
+#### Transforming fetched values
+
+```js
+document.head.set({
+  script: {
+    src: 'https://cdn.jsdelivr.net/npm/marked/marked.min.js',
+    onload: () => document.body.set({
+      content: Binder.fetch('./README.md', {
+        initial: '...loading',
+        transform: md => marked.parse(md),
+      }),
+    })
+  }
+})
+```
+
+In this example, the Markdown parser is loaded through `document.head.set()`, while the README is reactively fetched and rendered using `Binder.fetch()` once the `script` element loads.
+
+#### Parsing JSON
+
+By default, `Binder.fetch()` parses responses using `response.text()`.
+
+You may provide a custom `parse()` function for other response types.
+
+```
+const _user = Binder.fetch('/api/user', {
+  initial: 'Loading user...',
+  parse: res => res.json(),
+  transform: user => user.name,
+});
+```
+
+#### Options
+
+- `initial` → initial Binder value before the request completes  
+- `parse(response)` → parses the fetch response (defaults to `response.text()`)  
+- `transform(value)` → transforms the parsed value before assignment  
+- `error(error)` → handles request errors 
+- plus native fetch options   
+
+#### Updating existing binders
+
+Existing binders may also fetch and update their value directly using `_binder.fetch()`.
+
+```js
+const _content = new Binder('...loading');
+
+_content.fetch('./README.md').onChange(() => alert("Done fetching!"));
+
+document.body.set({
+  content: _content
+});
+```
+
+<details>
+ <summary>Binding outside the set method</summary>
 
 You may call the `bind` method of a binder and provide the element and property to be bound to it.
 
@@ -946,13 +1015,13 @@ _myBinder.bind(_anotherBinder, ['blue', 'red']);
 
 Note that if the value is a boolean, `false` would be position 0, and `true` is position 1.
 
----
+</details>
 
 ### Extending the HTMLElement Class
 
 To create custom HTML elements using the BareDOM approach, we can extend Javascript's HTMLElement class.
 
-```javascript
+```js
 // declares the class
 class MyElement extends HTMLElement {
   #value = new Binder();
@@ -1014,7 +1083,7 @@ This allows you to treat binders like regular properties, while keeping their re
 
 Attach binders to an object or class:
 
-```javascript
+```js
 // declares the class
 class MyElement extends HTMLElement {
   constructor() {
@@ -1115,8 +1184,6 @@ someElement.let('p', {
 );
 ```
 
----
-
 ### Server-Side BareDOM
 
 If you want to use BareDOM on the server (Node.js environment), check out the dedicated repository:
@@ -1128,13 +1195,11 @@ It includes:
 - `build.js` to generate HTML from source files
 - Instructions and dependencies for running BareDOM in a Node.js environment
 
----
-
 ### BareDOM and P5.js
 
 Yes, DOM.set works for P5.js elements. If you are not familiar with P5.js, please [remedy that](https://p5js.org/).
 
-```javascript
+```js
 p5.set({
   h1: 'Hello world',
   p: 'This is a paragraph.',
@@ -1143,7 +1208,7 @@ p5.set({
 
 When called from p5 or a p5 element, all elements given an id are created as p5 elements, and can execute p5 methods.
 
-```javascript
+```js
 someP5Element.set({
   h1: 'Hello world',
   button: {
@@ -1158,16 +1223,9 @@ someP5Element.set({
 goBtn.addClass('nice-button');
 ```
 
----
-
 ## License
 
 MIT License
-
----
-
-by Lenin Comprés
-
 
 ## Have fun!
 

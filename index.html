@@ -40,7 +40,7 @@
         },
         iframe: {
           srcdoc: _sampleCode.as(code =>
-            `<html><head><script src="https://cdn.jsdelivr.net/gh/lenincompres/baredom@latest/DOM.js"><\/script><\/head><body><script>let someElement=DOM.let('section',{},true);${code}<\/script><\/body><\/html>`
+            `<html><head><script src="./DOM.js"><\/script><\/head><body><script>let someElement=DOM.let('section',{},true);${code}<\/script><\/body><\/html>`
           ),
           onclick: e => e.stopPropagation(),
         }
@@ -59,22 +59,14 @@
       },
     });
 
-    fetch('./README.md').then(res => res.text()).then(md => {
-      // Convert Markdown to HTML and set it as the main content
-      mainContent = marked.parse(md);
-
-      // Add "Run Sample" buttons to JavaScript code blocks
-      DOM.get('pre').forEach(pre => {
-        if (!pre.get('.language-js, .language-javascript')) return;
-        pre.set({
-          position: 'relative',
-          a_run: {
-            ariaLabel: 'Run Sample',
-            onclick: () => sampleCode = pre.textContent,
-          }
-        })
-      });
-    });
+    _mainContent.fetch('./README.md', {
+      transform: md => marked.parse(md)
+    }).onChange(() => DOM.get('pre').forEach(pre => !!pre.get('.language-js') && pre.set({
+      a_run: {
+        ariaLabel: 'Run Sample',
+        onclick: () => sampleCode = pre.textContent,
+      }
+    })));
   </script>
 </body>
 
