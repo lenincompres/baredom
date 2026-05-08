@@ -38,54 +38,23 @@ BareDOM is a thin layer over the browser platform—not a framework abstraction.
 
 ## Why BareDOM?
 
-BareDOM is for when you want:
+BareDOM is for when you want direct control over the DOM with minimal abstraction.
 
-- Direct control over the DOM
-- Minimal abstraction
 - No virtual DOM
 - No template language
 - No compilation step
 
-The browser already provides:
-
-- rendering
-- events
-- styling
-- networking
-- storage
-- animation
-- accessibility
-
-BareDOM builds directly on these native capabilities.
+BareDOM builds directly on the browser’s native capabilities: rendering, events, styling, networking, storage, animation, accessibility, media, and modules.
 
 ### The Browser Is Already a Runtime
 
-Modern frontend ecosystems often require:
+Modern frontend development often depends on build pipelines, transpilers, bundlers, framework runtimes, hydration systems, and package managers — even for relatively simple interfaces.
 
-- build pipelines
-- transpilers
-- bundlers
-- framework runtimes
-- server-side rendering
-- hydration systems
-- package managers
+BareDOM takes a different approach.
 
-Even simple interfaces may depend on an entire compilation ecosystem.
+The browser already provides a rendering engine, a UI tree, an event system, styling, networking, storage, animation, accessibility, and JavaScript modules.
 
-BareDOM recognizes that the browser already provides:
-
-- a rendering engine
-- a UI tree
-- an event system
-- styling
-- networking
-- modules
-- storage
-- media
-- animation
-- accessibility
-
-BareDOM builds directly on these native capabilities.
+BareDOM works directly with those primitives instead of building another layer on top of them.
 
 ```js
 const data = [{name: 'Monica'}, {name: 'Ross'}, {name: 'Rachel'}, {name: 'Chandler'}, {name: 'Phoebe'}, {name: 'Joey'}];
@@ -102,16 +71,7 @@ document.body.set({
 });
 ```
 
-This can run:
-
-- directly in the browser
-- from a CDN
-- inside a static HTML file
-- without compilation
-- without JSX
-- without bundling
-- without virtual DOM
-- without server-side rendering
+This runs directly in the browser — from a CDN or a static HTML file — without compilation, JSX, bundling, virtual DOMs, or server-side rendering.
 
 > The DOM is the render tree.</br>
 > JavaScript is the template language.</br>
