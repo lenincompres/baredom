@@ -14,6 +14,14 @@ It extends native DOM elements with a small set of methods to **declare structur
 No JSX. No template languages. No framework components. No code switching.  
 No separate HTML or CSS—unless you want them.
 
+### The Bare Philosophy
+BareDOM was born from a simple realization: the browser is already a powerful UI engine. We don’t need to replace it; we need to unlock it. 
+
+After 6 years of "silent" production use, BareDOM is being shared as a response to the modern complexity crisis. It is designed for:
+* **The Interface Purist:** Who wants to spend time on UX, not build configurations.
+* **The Agentic Future:** Providing clean, semantic, and native structures that AI agents can actually understand and navigate.
+* **Longevity:** Zero dependencies means your code will run as long as the browser exists.
+
 ## Mental Model
 
 Structure is declared. Behavior is bound. Reuse emerges.
@@ -80,7 +88,7 @@ This runs directly in the browser — from a CDN or a static HTML file — witho
 
 This makes BareDOM naturally compatible with structured content systems, semantic metadata, and machine-readable web architectures.
 
-### 🌐 Universal Compatibility
+### Universal Compatibility
 
 Unlike components in React or Vue, which are trapped within their respective ecosystems, **BareDOM components are native Web Components.**
 
@@ -89,7 +97,7 @@ Because BareDOM works by extending the standard `HTMLElement` class, any compone
 * **Future-Proof:** Your code relies on the browser's native API, ensuring it will work for years without "breaking changes" from a framework maintainer.
 * **Zero Glue Code:** You don't need "wrappers" or "adapters" to make a BareDOM element work in a standard HTML page.
 
-## Setup
+## Getting Started
 
 BareDOM can run directly in the browser with a single script include.
 
@@ -110,9 +118,7 @@ Or download the DOM.js library and link that locally to your project.
 <script src="DOM.js"></script>
 ```
 
-For server-side usage, see [BareDOM-server](https://github.com/lenincompres/DOM.js-server)
-
-### Example
+### Quick Start
 
 A reactive value:
 
@@ -132,7 +138,7 @@ document.body.set({
 
 > Not vanilla. Bare.
 
-## Setting the DOM
+## Building the UI
 
 `DOM.set()` initializes and renders the document. It:
 - renders elements
@@ -569,7 +575,7 @@ This allows you to use **<custom-button></custom-button>** in your HTML. BareDOM
 
 Enhance your custom Elements with BareDOM by [binding their properties](#extending-the-htmlelement-class).
 
-## Styling Elements
+## Styling & Design
 
 ### Style Attribute
 
@@ -760,7 +766,7 @@ mainArea.css({
 
 </details>
 
-## Binding Element Properties
+## Reactive Data
 
 <!-- JHT: recommend Binding section move up before CSS  -->
 
@@ -985,7 +991,7 @@ _myBinder.bind(_anotherBinder, ['blue', 'red']);
 Note that if the value is a boolean, `false` would be position 0, and `true` is position 1.
 </details>
 
-## Extending the HTMLElement Class
+## Custom Elements
 
 To create custom HTML elements using the BareDOM approach, we can extend Javascript's HTMLElement class.
 
@@ -1043,7 +1049,7 @@ DOM.set({
 });
 ```
 
-### 📦 Packaging for Third-Party Use
+### Sharing & Distribution
 The beauty of the BareDOM approach is that the end-user doesn't need to know *how* the component was built. They simply treat it like a native HTML tag.
 
 To share a component, simply export your class. The consumer only needs to include the BareDOM runtime and your script:
@@ -1111,13 +1117,22 @@ Binder.set(state, {
 state.myProp = false;
 ```
 
-### 🏗️ Scaling with OOP and Encapsulation
+### Scaling & Architecture
 
 By combining `Binder.set()` with `HTMLElement` extension, BareDOM facilitates a rigorous **Object-Oriented Architecture.** * **Internal State:** Binders act as private reactive engines within your class, invisible to the outside world.
 * **Public API:** You can expose standard Getters and Setters that interact with these Binders, allowing other developers to control your component using standard JavaScript: `myElement.active = false`.
 * **Self-Contained Logic:** Styles (`css()`), structure (`set()`), and state (`Binder`) are all encapsulated in a single class file, making your code truly modular and easy to maintain in large-scale applications.
 
-## More BareDOM Uses and Methods
+### Designed for an Agentic Web
+
+In an era of Headless CMS and AI Agents, the "Virtual DOM" is a barrier. BareDOM keeps the UI "shallow" and native. 
+
+Because BareDOM uses standard **Custom Elements**, your interfaces are:
+1. **Machine Readable:** AI agents can interact with your elements using standard DOM APIs.
+2. **SEO & JSON-LD Friendly:** It’s easy to map data structures directly to the interface without framework-specific "magic."
+3. **Transparent:** What you see in the Inspector is exactly what you wrote in your logic.
+
+## Advanced Methods
 
 ### DOM.get() and element.get()
 
@@ -1171,18 +1186,7 @@ someElement.let('p', {
 );
 ```
 
-### Server-Side BareDOM
-
-If you want to use BareDOM on the server (Node.js environment), check out the dedicated repository:
-
-[DOM.js Server-Side](https://github.com/lenincompres/DOM.js-server)
-
-It includes:
-- `server.js` to serve `.dom.js` and `.dom.json` pages
-- `build.js` to generate HTML from source files
-- Instructions and dependencies for running BareDOM in a Node.js environment
-
-### BareDOM and P5.js
+### Creative Coding (p5.js)
 
 Yes, DOM.set works for P5.js elements. If you are not familiar with P5.js, please [remedy that](https://p5js.org/).
 
@@ -1214,8 +1218,16 @@ goBtn.addClass('nice-button');
 
 MIT License
 
-## Have fun!
+### Have fun!
 
 BareDOM is not a framework.
 
 It is the DOM, made usable.
+
+---
+
+> **A Note from the Author**
+> 
+> I began developing this approach years ago because I missed the simplicity of the early web—where the focus was on the interaction between the user and the browser. I didn't want a "framework" to stand between me and the DOM. BareDOM is the result of that journey. It’s not about hating modern tools; it’s about loving the native ones we already have. 
+> 
+> — **Lenin Comprés**
