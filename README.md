@@ -22,7 +22,7 @@ BareDOM is built on four ideas:
 
 - **Binder** → one reactive value
 - **Elements** → extend into reusable, stateful patterns
-- **element.set()** → declares structure, behavior, and bindings  
+- **element.set()** → declares structure, behavior, bindings—even attributes and styles.
 - **DOM.set()** → initializes the document (head + body)
 
 BareDOM does not introduce a second rendering system. It extends the DOM directly.
