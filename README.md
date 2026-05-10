@@ -37,32 +37,24 @@ BareDOM does not introduce a second rendering system. It extends the DOM directl
 
 ### Other Element extensions
 
-- `element.get()` → read from the DOM  
 - `DOM.let()` → create and return elements  
 - `Binder.set()` → create reactive values, setters, and getters
+- `element.get()` → read from the DOM  
 - and additional utility methods
 
 BareDOM is a thin layer over the browser platform—not a framework abstraction.
 
 ## Why BareDOM?
 
-BareDOM is for when you want direct control over the DOM with minimal abstraction.
-
-- No virtual DOM
-- No template language
-- No compilation step
-
-BareDOM builds directly on the browser’s native capabilities: rendering, events, styling, networking, storage, animation, accessibility, media, and modules.
+BareDOM is for the interface purist who wants direct control over the DOM with minimal abstraction.
 
 ### The Browser Is Already a Runtime
 
-Modern frontend development often depends on build pipelines, transpilers, bundlers, framework runtimes, hydration systems, and package managers — even for relatively simple interfaces.
+Modern frontend development often depends on heavy build pipelines, framework runtimes, and hydration systems. BareDOM takes a different approach: it works directly with the primitives the browser already provides—rendering, events, styling, and modules—making them more expressive without building another layer on top of them.
 
-BareDOM takes a different approach.
-
-The browser already provides a rendering engine, a UI tree, an event system, styling, networking, storage, animation, accessibility, and JavaScript modules.
-
-BareDOM works directly with those primitives instead of building another layer on top of them.
+- **Direct:** No Virtual DOM or diffing.
+- **Pure:** No template languages or JSX.
+- **Instant:** No compilation or build steps.
 
 ```js
 const data = [{name: 'Monica'}, {name: 'Ross'}, {name: 'Rachel'}, {name: 'Chandler'}, {name: 'Phoebe'}, {name: 'Joey'}];
