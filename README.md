@@ -46,7 +46,7 @@ BareDOM is a thin layer over the browser platform—not a framework abstraction.
 
 ## Why BareDOM?
 
-BareDOM is for the interface purist who wants direct control over the DOM with minimal abstraction.
+BareDOM is for developers who wants direct control over the DOM with minimal abstraction.
 
 ### The Browser Is Already a Runtime
 
