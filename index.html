@@ -16,10 +16,7 @@
     />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://baredom.org/" />
-    <meta
-      property="og:image"
-      content="https://baredom.org/{DOM}.png"
-    />
+    <meta property="og:image" content="https://baredom.org/{DOM}.png" />
 
     <!-- Twitter / X -->
     <meta name="twitter:card" content="summary_large_image" />
@@ -28,10 +25,7 @@
       name="twitter:description"
       content="Build interfaces directly in JavaScript — no frameworks, no templates, no virtual DOM."
     />
-    <meta
-      name="twitter:image"
-      content="https://baredom.org/{DOM}.png"
-    />
+    <meta name="twitter:image" content="https://baredom.org/{DOM}.png" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/x-icon" href="/{DOM}_icon.png" />
@@ -45,6 +39,9 @@
       // Initialize reactive variables for main content and sample code
       Binder.set(window, {
         mainContent: "...loading",
+        mainNav: undefined,
+        fixNav: false,
+        showNav: false,
         sampleCode: false,
       });
 
@@ -114,6 +111,20 @@
       DOM.set({
         header: {
           figure: new BaredomLogo("1.5em"),
+          nav: {
+            class: {
+              fixed: _fixNav,
+              show: _showNav,
+            },
+            a_hamburger: {
+              text: "☰",
+              ariaLabel: "Toggle Navigation",
+              onclick: () => (_showNav.value = !_showNav.value),
+            },
+            ul: {
+              content: _mainNav,
+            },
+          },
         },
         main: {
           content: _mainContent,
@@ -149,11 +160,16 @@
         },
       });
 
+      window.addEventListener(
+        "scroll",
+        () => (_fixNav.value = window.scrollY > 150),
+      );
+
       _mainContent
         .fetch("./README.md", {
           transform: (md) => marked.parse(md),
         })
-        .onChange(() =>
+        .onChange(() => {
           DOM.get("pre").forEach(
             (pre) =>
               !!pre.get(".language-js") &&
@@ -163,8 +179,28 @@
                   onclick: () => (sampleCode = pre.textContent),
                 },
               }),
-          ),
-        );
+          );
+
+          _mainNav.value = {
+            a: DOM.get("h1, h2").map((heading) => {
+              heading.id = heading.textContent
+                .toLowerCase()
+                .replace(/[^a-z0-9]+/g, "-")
+                .replace(/(^-|-$)/g, "");
+              return {
+                text: heading.textContent,
+                href: `#${heading.id}`,
+                onclick: () => {
+                  _showNav.value = false;
+                  scrollTo({
+                    top: heading.offsetTop - 100,
+                    behavior: "smooth",
+                  });
+                },
+              };
+            }),
+          };
+        });
     </script>
   </body>
 </html>

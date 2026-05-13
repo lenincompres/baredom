@@ -17,6 +17,10 @@
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   max-width: 700px;
   margin: 2rem auto;
@@ -64,7 +68,6 @@ details > summary {
 }
 
 details {
-
   border-bottom: solid 1px var(--accent3);
 }
 
@@ -201,4 +204,50 @@ hr {
   border: none;
   border-top: 1px solid var(--accent3);
   margin: 2rem 0;
+}
+
+nav {
+  margin: 2rem 0;
+}
+
+nav ul {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 0;
+  margin: 0;
+  text-align: left;
+}
+
+nav .hamburger {
+  display: none;
+}
+
+nav.fixed {
+  margin: 0;
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: fit-content;
+  min-width: 3rem;
+  background: var(--code-bg);
+  padding: 0.5rem;
+  border: 1px solid var(--accent3);
+  z-index: 1000;
+}
+
+nav.fixed ul {
+  display: none;
+}
+
+nav.fixed.show ul {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem;
+}
+
+nav.fixed .hamburger {
+  display: block;
 }
