@@ -82,7 +82,7 @@ DOM.set({
         onclick: () => (_showNav.value = !_showNav.value),
       },
       ul: {
-        content: _mainNav,
+        content: _mainNav.as((items) => ({a: items})),
       },
     },
   },
@@ -138,22 +138,20 @@ _mainContent
         }),
     );
 
-    _mainNav.value = {
-      a: DOM.get("h1, h2").map((heading) => {
-        heading.id = heading.textContent
-          .toLowerCase()
-          .replace(/[^a-z0-9]+/g, "-")
-          .replace(/(^-|-$)/g, "");
-        return {
-          text: heading.textContent,
-          onclick: () => {
-            _showNav.value = false;
-            scrollTo({
-              top: heading.offsetTop - 120,
-              behavior: "smooth",
-            });
-          },
-        };
-      }),
-    };
+    _mainNav.value = DOM.get("h1, h2").map((heading) => {
+      heading.id = heading.textContent
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/(^-|-$)/g, "");
+      return {
+        text: heading.textContent,
+        onclick: () => {
+          _showNav.value = false;
+          scrollTo({
+            top: heading.offsetTop - (_fixNav.value ? 0 : 120),
+            behavior: "smooth",
+          });
+        },
+      };
+    });
   });
