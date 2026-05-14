@@ -146,11 +146,10 @@ _mainContent
           .replace(/(^-|-$)/g, "");
         return {
           text: heading.textContent,
-          href: `#${heading.id}`,
           onclick: () => {
             _showNav.value = false;
             scrollTo({
-              top: heading.offsetTop - 100,
+              top: heading.offsetTop - 120,
               behavior: "smooth",
             });
           },
