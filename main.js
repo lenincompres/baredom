@@ -82,7 +82,7 @@ DOM.set({
         onclick: () => (_showNav.value = !_showNav.value),
       },
       ul: {
-        content: _mainNav.as((items) => ({a: items})),
+        content: _mainNav.as((items) => ({ li: items })),
       },
     },
   },
@@ -144,13 +144,15 @@ _mainContent
         .replace(/[^a-z0-9]+/g, "-")
         .replace(/(^-|-$)/g, "");
       return {
-        text: heading.textContent,
-        onclick: () => {
-          _showNav.value = false;
-          scrollTo({
-            top: heading.offsetTop - (_fixNav.value ? 0 : 120),
-            behavior: "smooth",
-          });
+        a: {
+          text: heading.textContent,
+          onclick: () => {
+            _showNav.value = false;
+            scrollTo({
+              top: heading.offsetTop - (_fixNav.value ? 0 : 120),
+              behavior: "smooth",
+            });
+          },
         },
       };
     });
