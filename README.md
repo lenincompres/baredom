@@ -90,6 +90,26 @@ Because BareDOM works by extending the standard `HTMLElement` class, any compone
 
 ## Getting Started
 
+### Browser
+
+```html
+<script src="https://cdn.jsdelivr.net/gh/lenincompres/baredom@latest/DOM.min.js"></script>
+```
+
+### Local Download
+
+Download from [github.com/lenincompres/baredom](https://github.com/lenincompres/baredom){:target="_blank"}:
+
+- `DOM.min.js`
+- `DOM.js`
+- GitHub Releases
+
+Then:
+
+```html
+<script src="DOM.js"></script>
+```
+
 BareDOM can run directly in the browser with a single script include.
 
 ```html
@@ -102,11 +122,6 @@ BareDOM can run directly in the browser with a single script include.
     <script src="main.js"></script>
   </body>
 </html>
-```
-Or download the DOM.js library and link that locally to your project.
-
-```html
-<script src="DOM.js"></script>
 ```
 
 ### Quick Start
