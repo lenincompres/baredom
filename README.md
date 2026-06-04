@@ -98,7 +98,7 @@ Because BareDOM works by extending the standard `HTMLElement` class, any compone
 
 ### Local Download
 
-Download from [github.com/lenincompres/baredom](https://github.com/lenincompres/baredom){:target="_blank"}:
+Download from [github.com/lenincompres/baredom](https://github.com/lenincompres/baredom)
 
 - `DOM.min.js`
 - `DOM.js`
